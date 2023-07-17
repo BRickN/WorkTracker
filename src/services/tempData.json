@@ -1,0 +1,116 @@
+[
+  {
+    "slug": "week-28-10072023-16072023",
+    "weekNr": "28",
+    "startDate": "10-07-2023",
+    "endDate": "16-07-2023",
+    "days": [
+      {
+        "date": "10-07-2023",
+        "day": "Monday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "11-07-2023",
+        "day": "Tuesday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "12-07-2023",
+        "day": "Wednesday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "13-07-2023",
+        "day": "Thursday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "14-07-2023",
+        "day": "Friday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      }
+    ]
+  },
+  {
+    "slug": "week-29-17072023-123072023",
+    "weekNr": "29",
+    "startDate": "17-07-2023",
+    "endDate": "23-07-2023",
+    "days": [
+      {
+        "date": "17-07-2023",
+        "day": "Monday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "18-07-2023",
+        "day": "Tuesday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "19-07-2023",
+        "day": "Wednesday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "20-07-2023",
+        "day": "Thursday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "21-07-2023",
+        "day": "Friday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      }
+    ]
+  },
+  {
+    "slug": "week-30-24072023-30072023",
+    "weekNr": "30",
+    "startDate": "10-07-2023",
+    "endDate": "16-07-2023",
+    "days": [
+      {
+        "date": "24-07-2023",
+        "day": "Monday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "25-07-2023",
+        "day": "Tuesday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "26-07-2023",
+        "day": "Wednesday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "27-07-2023",
+        "day": "Thursday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      },
+      {
+        "date": "28-07-2023",
+        "day": "Friday",
+        "startTime": "08:15",
+        "endTime": "17:00"
+      }
+    ]
+  }
+]
