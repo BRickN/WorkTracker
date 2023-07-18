@@ -6,7 +6,7 @@ import Card from './card';
 
 function WeekListItem({week}: {week: Week}) {
   return (
-    <Card style={{backgroundColor: 'blue'}}>
+    <Card key={week.slug} style={{backgroundColor: 'blue'}}>
       <View style={styles.listHeaderContainer}>
         <Text>Week: {week.weekNr}</Text>
         <Text>
@@ -15,7 +15,9 @@ function WeekListItem({week}: {week: Week}) {
       </View>
       <View style={styles.listDaysContainer}>
         {week.days?.length > 0 &&
-          week.days.map(day => <WeekListDay day={day.day[0]} hours={8} />)}
+          week.days.map(day => (
+            <WeekListDay key={day.day} day={day.day[0]} hours={8} />
+          ))}
         <WeekListDay day={'Total'} hours={48} />
       </View>
     </Card>

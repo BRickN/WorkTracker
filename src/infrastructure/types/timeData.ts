@@ -9,6 +9,6 @@ export interface Week {
 export interface Day {
   date: Date;
   day: string;
-  startTime: number;
-  endTime: number;
+  startTime: Date;
+  endTime: Date;
 }

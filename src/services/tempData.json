@@ -1,115 +1,115 @@
 [
   {
-    "slug": "week-28-10072023-16072023",
+    "slug": "week-28-20230710-20230716",
     "weekNr": "28",
-    "startDate": "10-07-2023",
-    "endDate": "16-07-2023",
+    "startDate": "2023-07-10",
+    "endDate": "2023-07-16",
     "days": [
       {
-        "date": "10-07-2023",
+        "date": "2023-07-10",
         "day": "Monday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-10T08:15:00.000Z",
+        "endTime": "2023-07-10T17:00:00.000Z"
       },
       {
-        "date": "11-07-2023",
+        "date": "2023-07-11",
         "day": "Tuesday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-11T08:15:00.000Z",
+        "endTime": "2023-07-11T17:00:00.000Z"
       },
       {
-        "date": "12-07-2023",
+        "date": "2023-07-12",
         "day": "Wednesday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-12T08:15:00.000Z",
+        "endTime": "2023-07-12T17:00:00.000Z"
       },
       {
-        "date": "13-07-2023",
+        "date": "2023-07-13",
         "day": "Thursday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-13T08:15:00.000Z",
+        "endTime": "2023-07-13T17:00:00.000Z"
       },
       {
-        "date": "14-07-2023",
+        "date": "2023-07-14",
         "day": "Friday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-14T08:15:00.000Z",
+        "endTime": "2023-07-14T17:00:00.000Z"
       }
     ]
   },
   {
-    "slug": "week-29-17072023-123072023",
+    "slug": "week-29-20230717-20230723",
     "weekNr": "29",
-    "startDate": "17-07-2023",
-    "endDate": "23-07-2023",
+    "startDate": "2023-07-17",
+    "endDate": "2023-07-23",
     "days": [
       {
-        "date": "17-07-2023",
+        "date": "2023-07-17",
         "day": "Monday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-17T08:15:00.000Z",
+        "endTime": "2023-07-17T17:00:00.000Z"
       },
       {
-        "date": "18-07-2023",
+        "date": "2023-07-18",
         "day": "Tuesday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-18T08:15:00.000Z",
+        "endTime": "2023-07-18T17:00:00.000Z"
       },
       {
-        "date": "19-07-2023",
+        "date": "2023-07-19",
         "day": "Wednesday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-19T08:15:00.000Z",
+        "endTime": "2023-07-19T17:00:00.000Z"
       },
       {
-        "date": "20-07-2023",
+        "date": "2023-07-20",
         "day": "Thursday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-20T08:15:00.000Z",
+        "endTime": "2023-07-20T17:00:00.000Z"
       },
       {
-        "date": "21-07-2023",
+        "date": "2023-07-21",
         "day": "Friday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-21T08:15:00.000Z",
+        "endTime": "2023-07-21T17:00:00.000Z"
       }
     ]
   },
   {
-    "slug": "week-30-24072023-30072023",
+    "slug": "week-30-20230724-20230730",
     "weekNr": "30",
-    "startDate": "10-07-2023",
-    "endDate": "16-07-2023",
+    "startDate": "2023-07-24",
+    "endDate": "2023-07-28",
     "days": [
       {
-        "date": "24-07-2023",
+        "date": "2023-07-24",
         "day": "Monday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-24T08:15:00.000Z",
+        "endTime": "2023-07-24T17:00:00.000Z"
       },
       {
-        "date": "25-07-2023",
+        "date": "2023-07-25",
         "day": "Tuesday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-25T08:15:00.000Z",
+        "endTime": "2023-07-25T17:00:00.000Z"
       },
       {
-        "date": "26-07-2023",
+        "date": "2023-07-26",
         "day": "Wednesday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-26T08:15:00.000Z",
+        "endTime": "12023-07-26T7:00:00.000Z"
       },
       {
-        "date": "27-07-2023",
+        "date": "2023-07-27",
         "day": "Thursday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-27T08:15:00.000Z",
+        "endTime": "2023-07-27T17:00:00.000Z"
       },
       {
-        "date": "28-07-2023",
+        "date": "2023-07-28",
         "day": "Friday",
-        "startTime": "08:15",
-        "endTime": "17:00"
+        "startTime": "2023-07-28T08:15:00.000Z",
+        "endTime": "2023-07-28T17:00:00.000Z"
       }
     ]
   }

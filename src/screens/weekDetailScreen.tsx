@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import SafeContainer from '../components/safeContainer';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 import {HomeStackParamList} from '../infrastructure/navigation/navTypes';
@@ -6,6 +6,11 @@ import {Week} from '../infrastructure/types/timeData';
 import {colors} from '../utils/colors';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/FontAwesome';
+import TitleText from '../components/titleText';
+import {
+  CalcHourDifference,
+  GetFormattedTimeFromDate,
+} from '../services/functions/timeFunctions';
 
 type WeekDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -18,48 +23,55 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
   return (
     <>
       <SafeContainer>
-        {week.days.map(day => (
-          <TouchableOpacity
-            style={styles.cardContainer}
-            onPress={() =>
-              navigation.navigate('DayDetail', {
-                date: day.date,
-              })
-            }>
-            <View style={styles.infoContainer}>
-              <View>
-                <Text style={styles.header}>
-                  {day.day} - {day.date.toString()}
-                </Text>
+        {week.days.map(day => {
+          return (
+            <TouchableOpacity
+              style={styles.cardContainer}
+              onPress={() =>
+                navigation.navigate('DayDetail', {
+                  day: day,
+                })
+              }>
+              <View style={styles.infoContainer}>
+                <View>
+                  <Text style={styles.header}>
+                    {day.day} - {day.date.toString()}
+                  </Text>
+                </View>
+                <View style={styles.timesInfoContainer}>
+                  <View>
+                    <TitleText
+                      title={'Start'}
+                      text={GetFormattedTimeFromDate(day.startTime)}
+                    />
+                  </View>
+                  <View>
+                    <TitleText
+                      title={'End'}
+                      text={GetFormattedTimeFromDate(day.endTime)}
+                    />
+                  </View>
+                  <View>
+                    <TitleText
+                      title={'Hours worked'}
+                      text={CalcHourDifference(
+                        day.startTime,
+                        day.endTime,
+                      ).toString()}
+                    />
+                  </View>
+                </View>
               </View>
-              <View style={styles.timesInfoContainer}>
-                <View>
-                  <Text style={styles.title}>Start</Text>
-                  <View style={styles.horizontalSpacer} />
-                  <Text>{day.startTime}</Text>
-                </View>
-                <View>
-                  <Text style={styles.title}>End</Text>
-                  <View style={styles.horizontalSpacer} />
-                  <Text>{day.endTime}</Text>
-                </View>
-                <View>
-                  <Text style={styles.title}>Hours worked</Text>
-                  <View style={styles.horizontalSpacer} />
-
-                  <Text>8</Text>
-                </View>
+              <View style={styles.chevronContainer}>
+                <Icon
+                  name={'chevron-right'}
+                  size={20}
+                  color={colors.textPrimary}
+                />
               </View>
-            </View>
-            <View style={styles.chevronContainer}>
-              <Icon
-                name={'chevron-right'}
-                size={20}
-                color={colors.textPrimary}
-              />
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          );
+        })}
       </SafeContainer>
     </>
   );

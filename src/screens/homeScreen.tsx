@@ -1,12 +1,6 @@
 import SafeContainer from '../components/safeContainer';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {
-  BottomTabParamList,
-  HomeStackParamList,
-} from '../infrastructure/navigation/navTypes';
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {StackScreenProps} from '@react-navigation/stack';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {HomeStackParamList} from '../infrastructure/navigation/navTypes';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useWeeks} from '../infrastructure/hooks/useWeeks';
 import {Week} from '../infrastructure/types/timeData';
 import WeekListItem from '../components/weekListItem';
@@ -33,7 +27,7 @@ function HomeScreen({navigation}: HomeNavigationProps) {
             week: item,
           })
         }>
-        <WeekListItem week={item} />
+        <WeekListItem key={item.slug} week={item} />
       </TouchableOpacity>
     );
   };
