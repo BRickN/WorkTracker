@@ -1,16 +1,20 @@
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 import {useState} from 'react';
 
 export interface TimePickerProps {
   date: Date;
+  parentOnChange: (selectedDate: Date) => void;
 }
 
 function TimePicker(props: TimePickerProps) {
   const [date, setDate] = useState(new Date(props.date));
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDate(currentDate);
+  const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (selectedDate) {
+      setDate(selectedDate);
+      props.parentOnChange(selectedDate);
+    }
   };
 
   return (
@@ -21,6 +25,7 @@ function TimePicker(props: TimePickerProps) {
         mode={'time'}
         is24Hour={true}
         onChange={onChange}
+        timeZoneOffsetInMinutes={0}
       />
     </>
   );

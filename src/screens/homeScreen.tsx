@@ -1,10 +1,24 @@
 import SafeContainer from '../components/safeContainer';
 import {HomeStackParamList} from '../infrastructure/navigation/navTypes';
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useWeeks} from '../infrastructure/hooks/useWeeks';
 import {Week} from '../infrastructure/types/timeData';
 import WeekListItem from '../components/weekListItem';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
+// @ts-ignore
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {colors} from '../utils/colors';
+import {useState} from 'react';
+import {Modal} from 'react-native';
+import NewWeekForm from '../components/newWeekForm';
+import {longPressGestureHandlerProps} from 'react-native-gesture-handler/lib/typescript/handlers/LongPressGestureHandler';
 
 // type HomeNavigationProps = CompositeScreenProps<
 //   BottomTabScreenProps<BottomTabParamList, 'Home'>,
@@ -17,7 +31,11 @@ type HomeNavigationProps = NativeStackScreenProps<
 >;
 
 function HomeScreen({navigation}: HomeNavigationProps) {
+  const [modalVisible, setModalVisible] = useState(false);
   const weeks = useWeeks();
+
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
 
   const renderWeek = ({item}: {item: Week}) => {
     return (
@@ -37,7 +55,30 @@ function HomeScreen({navigation}: HomeNavigationProps) {
       <SafeContainer>
         <View style={styles.weeksContainer}>
           <FlatList data={weeks} renderItem={renderWeek} />
+          <TouchableOpacity onPress={showModal}>
+            <Icon
+              name={'plus-circle'}
+              size={60}
+              style={styles.plusIcon}
+              color={colors.textPrimary}
+            />
+          </TouchableOpacity>
+          <Modal visible={modalVisible} transparent={true}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View style={styles.closeContainer}>
+                  <Pressable onPress={hideModal} style={styles.pressable}>
+                    <Text style={styles.buttonClose}>X</Text>
+                  </Pressable>
+                </View>
+                <View style={styles.formContainer}>
+                  <NewWeekForm onSubmit={data => console.log(data)} />
+                </View>
+              </View>
+            </View>
+          </Modal>
         </View>
+        <View />
       </SafeContainer>
     </>
   );
@@ -48,5 +89,57 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   weeksContainer: {
     flex: 1,
+    position: 'relative',
+  },
+  plusIcon: {
+    position: 'absolute',
+    bottom: 5,
+    right: 5,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 25,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    position: 'relative',
+    width: '80%',
+  },
+  closeContainer: {
+    position: 'absolute',
+    top: 8,
+    right: 10,
+    zIndex: 99,
+  },
+  pressable: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonClose: {
+    color: colors.textPrimary,
+    fontWeight: 'bold',
+    borderWidth: 2,
+    borderColor: colors.textPrimary,
+    borderRadius: 15,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 7,
+    paddingRight: 7,
+  },
+  formContainer: {
+    margin: 10,
   },
 });
