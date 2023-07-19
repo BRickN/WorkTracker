@@ -1,4 +1,4 @@
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 import {HomeStackParamList} from '../infrastructure/navigation/navTypes';
 import SafeContainer from '../components/safeContainer';
@@ -7,6 +7,7 @@ import {GetFormattedTimeFromDate} from '../services/functions/timeFunctions';
 import {colors} from '../utils/colors';
 import {Button} from 'react-native-paper';
 import Spacer from '../components/spacer';
+import TimePicker from '../components/timePicker';
 
 type DayDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -16,13 +17,13 @@ type DayDetailNavigationProps = NativeStackScreenProps<
 function DayDetailScreen({route}: DayDetailNavigationProps) {
   const [startTime, setStartTime] = useState<Date>();
   const [endTime, setEndTime] = useState<Date>();
-
+  const day = route.params.day;
   useEffect(() => {
     if (route.params.day.startTime != null) {
-      setStartTime(route.params.day.startTime);
+      setStartTime(day.startTime);
     }
     if (route.params.day.endTime != null) {
-      setEndTime(route.params.day.endTime);
+      setEndTime(day.endTime);
     }
   }, []);
 
@@ -30,28 +31,38 @@ function DayDetailScreen({route}: DayDetailNavigationProps) {
     <>
       <SafeContainer>
         <View style={styles.inputContainer}>
-          <TextInput
-            value={GetFormattedTimeFromDate(startTime)}
-            placeholder={'Start'}
-            style={styles.input}
-            editable={false}
-          />
-          <Button mode={'contained'} disabled={startTime !== null}>
-            Start
-          </Button>
+          <Text>Start</Text>
+          <TimePicker date={day.startTime} />
+          {/*<TextInput*/}
+          {/*  value={GetFormattedTimeFromDate(startTime)}*/}
+          {/*  placeholder={'hh:mm'}*/}
+          {/*  style={styles.input}*/}
+          {/*  editable={true}*/}
+          {/*  onChangeText={text => setStartTime(text)}*/}
+          {/*/>*/}
+          {/*<Button*/}
+          {/*  mode={'contained'}*/}
+          {/*  disabled={startTime !== null}*/}
+          {/*  style={styles.button}>*/}
+          {/*  <Text style={styles.text}>Start</Text>*/}
+          {/*</Button>*/}
         </View>
         <Spacer marginTop={2} marginBottom={2} marginLeft={0} marginRight={0} />
         <View style={styles.inputContainer}>
-          <TextInput
-            value={GetFormattedTimeFromDate(endTime)}
-            placeholder={'End'}
-            style={styles.input}
-            editable={false}
-          />
-          {/*disabled={endTime !== null}*/}
-          <Button mode={'contained'} onPress={() => console.log('press')}>
-            End
-          </Button>
+          {/*<TextInput*/}
+          {/*  value={GetFormattedTimeFromDate(endTime)}*/}
+          {/*  placeholder={'End'}*/}
+          {/*  style={styles.input}*/}
+          {/*  editable={true}*/}
+          {/*/>*/}
+          {/*/!*disabled={endTime !== null}*!/*/}
+          {/*<Button*/}
+          {/*  mode={'contained'}*/}
+          {/*  disabled={startTime !== null}*/}
+          {/*  onPress={() => console.log('press')}*/}
+          {/*  style={styles.button}>*/}
+          {/*  <Text style={styles.text}>End</Text>*/}
+          {/*</Button>*/}
         </View>
       </SafeContainer>
     </>
@@ -68,8 +79,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    width: '60%',
-    borderRadius: 8,
+    width: '50%',
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: 'black',
     backgroundColor: colors.tertiary,
@@ -78,8 +89,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
+  text: {
+    color: '#fff',
+  },
   button: {
-    width: '25%',
-    backgroundColor: 'red',
+    width: '40%',
+    padding: 2,
+    backgroundColor: colors.primary,
+    borderRadius: 10,
   },
 });
