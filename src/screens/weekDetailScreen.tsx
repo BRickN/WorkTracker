@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import TitleText from '../components/titleText';
 import {
   CalcHourDifference,
+  GetFormattedDateString,
   GetFormattedTimeFromDate,
 } from '../services/functions/timeFunctions';
 
@@ -35,7 +36,7 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
               <View style={styles.infoContainer}>
                 <View>
                   <Text style={styles.header}>
-                    {day.day} - {day.date.toString()}
+                    {day.day} - {GetFormattedDateString(day.date)}
                   </Text>
                 </View>
                 <View style={styles.timesInfoContainer}>
@@ -54,10 +55,12 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
                   <View>
                     <TitleText
                       title={'Hours worked'}
-                      text={CalcHourDifference(
-                        day.startTime,
-                        day.endTime,
-                      ).toString()}
+                      text={
+                        CalcHourDifference(
+                          day.startTime,
+                          day.endTime,
+                        )?.toString() ?? ''
+                      }
                     />
                   </View>
                 </View>

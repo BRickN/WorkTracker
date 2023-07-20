@@ -1,4 +1,9 @@
-function CalcHourDifference(start: Date, end: Date): number {
+import {Day, Week} from '../../infrastructure/types/timeData';
+
+function CalcHourDifference(start?: Date, end?: Date): number | undefined {
+  if (!start || !end) {
+    return undefined;
+  }
   const startDateFormatted: Date = new Date(start);
   const endDateFormatted: Date = new Date(end);
   let diff = (endDateFormatted.getTime() - startDateFormatted.getTime()) / 1000;
@@ -6,6 +11,24 @@ function CalcHourDifference(start: Date, end: Date): number {
   return parseFloat(diff.toFixed(2));
 }
 
+//return dd-mm-yyy
+function GetFormattedDateString(date: Date): string {
+  if (!date) {
+    return '';
+  }
+  try {
+    return new Date(date).toLocaleDateString('nl-NL', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  } catch (e) {
+    console.log(e);
+    return '';
+  }
+}
+
+//returns time as hh:mm
 function GetFormattedTimeFromDate(date?: Date): string {
   if (!date) {
     return '';
@@ -73,9 +96,63 @@ function GetWeekNrByDate(date: Date): number {
   return weeknum;
 }
 
+function CalcTotalHours(week: Week): number {
+  let sum = 0;
+  week.days.forEach(day => {
+    let hoursWorked = CalcHourDifference(day.startTime, day.endTime);
+    if (hoursWorked) {
+      sum += hoursWorked;
+    }
+  });
+  return sum;
+}
+
+function GetWorkDaysBetweenStartEndDate(startDate: Date, endDate: Date): Day[] {
+  let dayArray = new Array<Day>();
+  let currentDate = startDate;
+
+  // endDate.setDate(endDate.getDate() - 2);
+  let endDateNew = new Date(
+    endDate.getFullYear(),
+    endDate.getMonth(),
+    endDate.getDate() - 2,
+  );
+
+  while (currentDate <= endDateNew) {
+    dayArray.push(new Day(currentDate));
+    currentDate = addDays(currentDate, 1);
+  }
+  return dayArray;
+}
+
+const addDays = (date: Date, days: number): Date => {
+  date.setDate(date.getDate() + days);
+  return date;
+};
+
+function GetDayNameByDayNumber(dayNumber: number): string {
+  if (dayNumber < 0 || dayNumber > 7) {
+    return '';
+  }
+  const weekdays: string[] = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  return weekdays[dayNumber];
+}
+
 export {
   GetFormattedTimeFromDate,
   CalcHourDifference,
   GetStartDateByWeek,
   GetWeekNrByDate,
+  GetWorkDaysBetweenStartEndDate,
+  GetDayNameByDayNumber,
+  GetFormattedDateString,
+  CalcTotalHours,
 };

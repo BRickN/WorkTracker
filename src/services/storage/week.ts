@@ -17,7 +17,8 @@ export const initWeeks = async (): Promise<boolean> => {
 };
 
 export const getWeeks = async (): Promise<Week[]> => {
-  return await getData(WEEKS_DATA_KEY);
+  const weeks = (await getData(WEEKS_DATA_KEY)) as Week[];
+  return weeks.sort(x => x.weekNr);
 };
 
 export const getWeekBySlug = async (slug: string): Promise<Week> => {
@@ -33,6 +34,7 @@ export const storeWeek = async (newWeek: Week): Promise<boolean> => {
     await storeData(WEEKS_DATA_KEY, newWeeks);
     return true;
   } catch (e) {
+    console.log(e);
     return false;
   }
 };

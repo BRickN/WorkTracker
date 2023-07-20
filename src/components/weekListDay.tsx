@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {colors} from '../utils/colors';
 
-function WeekListDay({day, hours}: {day: string; hours: number}) {
+function WeekListDay({day, hours}: {day: string; hours?: number}) {
   return (
     <View style={styles.container}>
       <Text style={[styles.text, styles.textDay]}>{day}</Text>

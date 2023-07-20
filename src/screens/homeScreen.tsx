@@ -15,10 +15,11 @@ import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {colors} from '../utils/colors';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Modal} from 'react-native';
-import NewWeekForm from '../components/newWeekForm';
-import {longPressGestureHandlerProps} from 'react-native-gesture-handler/lib/typescript/handlers/LongPressGestureHandler';
+import NewWeekForm, {NewWeekFormData} from '../components/newWeekForm';
+import {getWeeks, storeWeek} from '../services/storage/week';
+import {useIsFocused} from '@react-navigation/native';
 
 // type HomeNavigationProps = CompositeScreenProps<
 //   BottomTabScreenProps<BottomTabParamList, 'Home'>,
@@ -32,10 +33,33 @@ type HomeNavigationProps = NativeStackScreenProps<
 
 function HomeScreen({navigation}: HomeNavigationProps) {
   const [modalVisible, setModalVisible] = useState(false);
-  const weeks = useWeeks();
+  const [weeks, setWeeks] = useState<Week[]>([]);
+  const isFocused = useIsFocused();
+
+  // const weeks = useWeeks();
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
+
+  const storeData = async (data: NewWeekFormData) => {
+    console.log(data);
+    const week = new Week(data);
+    console.log(week);
+
+    const success = await storeWeek(week);
+    if (success) {
+      setModalVisible(false);
+      setWeeks([week, ...weeks]);
+    }
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      getWeeks().then(result => {
+        setWeeks(result);
+      });
+    }
+  }, [isFocused]);
 
   const renderWeek = ({item}: {item: Week}) => {
     return (
@@ -72,7 +96,7 @@ function HomeScreen({navigation}: HomeNavigationProps) {
                   </Pressable>
                 </View>
                 <View style={styles.formContainer}>
-                  <NewWeekForm onSubmit={data => console.log(data)} />
+                  <NewWeekForm onSubmit={data => storeData(data)} />
                 </View>
               </View>
             </View>

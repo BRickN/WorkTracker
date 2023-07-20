@@ -3,6 +3,11 @@ import {StyleSheet, Text, View} from 'react-native';
 import WeekListDay from './weekListDay';
 import {colors} from '../utils/colors';
 import Card from './card';
+import {
+  CalcHourDifference,
+  CalcTotalHours,
+  GetFormattedDateString,
+} from '../services/functions/timeFunctions';
 
 function WeekListItem({week}: {week: Week}) {
   return (
@@ -10,15 +15,20 @@ function WeekListItem({week}: {week: Week}) {
       <View style={styles.listHeaderContainer}>
         <Text>Week: {week.weekNr}</Text>
         <Text>
-          From: {week.startDate.toString()} - Till: {week.endDate.toString()}
+          From: {GetFormattedDateString(week.startDate)} - Till:{' '}
+          {GetFormattedDateString(week.endDate)}
         </Text>
       </View>
       <View style={styles.listDaysContainer}>
         {week.days?.length > 0 &&
           week.days.map(day => (
-            <WeekListDay key={day.day} day={day.day[0]} hours={8} />
+            <WeekListDay
+              key={day.day}
+              day={day.day[0]}
+              hours={CalcHourDifference(day.startTime, day.endTime)}
+            />
           ))}
-        <WeekListDay day={'Total'} hours={48} />
+        <WeekListDay day={'Total'} hours={CalcTotalHours(week)} />
       </View>
     </Card>
   );

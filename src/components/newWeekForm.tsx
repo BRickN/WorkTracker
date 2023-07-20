@@ -29,7 +29,6 @@ function NewWeekForm({onSubmit}: NewWeekFormProps) {
       weeknr,
       new Date(Date.now()).getFullYear(),
     );
-
     const endDate = new Date(
       startDate.getFullYear(),
       startDate.getMonth(),
