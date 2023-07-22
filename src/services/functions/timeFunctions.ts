@@ -114,7 +114,7 @@ function GetWorkDaysBetweenStartEndDate(startDate: Date, endDate: Date): Day[] {
   const endDateNew = new Date(
     endDate.getFullYear(),
     endDate.getMonth(),
-    endDate.getDate() - 1,
+    endDate.getDate() - 2,
   );
 
   while (currentDate <= endDateNew) {
