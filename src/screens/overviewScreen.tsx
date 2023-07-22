@@ -1,10 +1,15 @@
 import {Text, View} from 'react-native';
+import SafeContainer from '../components/safeContainer';
 
 function OverviewScreen() {
   return (
-    <View>
-      <Text>Hi from overview</Text>
-    </View>
+    <>
+      <SafeContainer>
+        <View>
+          <Text>Hi from overview</Text>
+        </View>
+      </SafeContainer>
+    </>
   );
 }
 

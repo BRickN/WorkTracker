@@ -27,7 +27,7 @@ type HomeNavigationProps = NativeStackScreenProps<
 >;
 
 function HomeScreen({navigation}: HomeNavigationProps) {
-  const {weeks, isLoadingWeeks, error, update} = useContext(
+  const {weeks, isLoadingWeeks, update} = useContext(
     WeeksContext,
   ) as WeeksContextType;
 

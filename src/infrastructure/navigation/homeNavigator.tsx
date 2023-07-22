@@ -14,17 +14,21 @@ function HomeNavigator() {
         component={HomeScreen}
         options={{
           headerShown: true,
+          title: 'Home',
         }}
       />
       <Stack.Screen
         name={'WeekDetail'}
         component={WeekDetailScreen}
-        options={{headerShown: true}}
+        options={{
+          headerShown: true,
+          title: 'Week',
+        }}
       />
       <Stack.Screen
         name={'DayDetail'}
         component={DayDetailScreen}
-        options={{headerShown: true}}
+        options={{headerShown: true, title: 'Register hours'}}
       />
     </Stack.Navigator>
   );
