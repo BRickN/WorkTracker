@@ -32,7 +32,8 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
                 navigation.navigate('DayDetail', {
                   day: day,
                 })
-              }>
+              }
+              key={day.date.toString()}>
               <View style={styles.infoContainer}>
                 <View>
                   <Text style={styles.header}>
