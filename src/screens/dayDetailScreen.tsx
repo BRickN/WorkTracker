@@ -46,10 +46,11 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
 
   const submit = async () => {
     console.log('start ' + startDateTime);
-    console.log('end' + endDateTime);
+    console.log('end ' + endDateTime);
     console.log('day before update' + JSON.stringify(day));
     day.startTime = startDateTime;
     day.endTime = endDateTime;
+    console.log(week);
     await updateWeek(week);
     update(await getWeeks());
     console.log('day after update' + JSON.stringify(day));

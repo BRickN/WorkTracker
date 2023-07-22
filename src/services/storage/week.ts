@@ -38,6 +38,7 @@ export const storeWeek = async (newWeek: Week): Promise<boolean> => {
 
 export const updateWeek = async (updatedWeek: Week) => {
   try {
+    console.log();
     let currentWeeks = await getWeeks();
     let currentWeek = currentWeeks.find(x => x.slug === updatedWeek.slug);
     if (!currentWeek) {
