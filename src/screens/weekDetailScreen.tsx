@@ -20,7 +20,7 @@ type WeekDetailNavigationProps = NativeStackScreenProps<
 
 function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
   const week: Week = route.params.week;
-
+  console.log(week);
   return (
     <>
       <SafeContainer>

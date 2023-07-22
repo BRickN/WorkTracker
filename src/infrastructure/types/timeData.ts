@@ -19,9 +19,7 @@ export class Week {
       weekFormData.startDate.getMonth(),
       weekFormData.startDate.getDate(),
     );
-    console.log('this.startdate', this.startDate);
     this.endDate = new Date(weekFormData.endDate);
-    console.log('this.enddate', this.endDate);
 
     this.weekNr = parseFloat(weekFormData.weekNumber);
     this.days = GetWorkDaysBetweenStartEndDate(

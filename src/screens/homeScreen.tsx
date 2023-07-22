@@ -8,18 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useWeeks} from '../infrastructure/hooks/useWeeks';
 import {Week} from '../infrastructure/types/timeData';
 import WeekListItem from '../components/weekListItem';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {colors} from '../utils/colors';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {Modal} from 'react-native';
 import NewWeekForm, {NewWeekFormData} from '../components/newWeekForm';
-import {getWeeks, storeWeek} from '../services/storage/week';
-import {useIsFocused} from '@react-navigation/native';
+import {storeWeek} from '../services/storage/week';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
 import Loader from '../components/loader';
 
@@ -41,7 +39,6 @@ function HomeScreen({navigation}: HomeNavigationProps) {
   const storeData = async (data: NewWeekFormData) => {
     console.log(data);
     const week = new Week(data);
-    console.log(week);
 
     const success = await storeWeek(week);
     if (success) {
