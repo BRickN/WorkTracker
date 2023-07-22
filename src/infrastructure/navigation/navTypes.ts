@@ -12,7 +12,7 @@ export type HomeStackParamList = {
     weekSlug: string;
   };
   DayDetail: {
-    day: Day;
+    dayDate: Date;
     weekSlug: string;
   };
 };

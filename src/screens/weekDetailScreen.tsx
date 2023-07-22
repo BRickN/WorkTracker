@@ -40,7 +40,7 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
               style={styles.cardContainer}
               onPress={() =>
                 navigation.navigate('DayDetail', {
-                  day: day,
+                  dayDate: day.date,
                   weekSlug: week.slug,
                 })
               }

@@ -13,6 +13,7 @@ import SubmitButton from '../components/submitButton';
 import navigation from '../infrastructure/navigation';
 import {getWeeks, updateWeek} from '../services/storage/week';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
+import {Day, Week} from '../infrastructure/types/timeData';
 
 type DayDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -28,20 +29,20 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
   const [endDateTimePickerVisible, setEndDateTimePickerVisible] =
     useState(false);
 
-  const day = route.params.day;
   const week = weeks.find(x => x.slug === route.params.weekSlug);
+  const day = week?.days.find((x: Day) => x.date === route.params.dayDate);
 
   useEffect(() => {
-    if (route.params.day?.startTime != null) {
+    if (day?.startTime != null) {
       setStartDateTime(day.startTime);
     }
-    if (route.params.day?.endTime != null) {
+    if (day?.endTime != null) {
       setEndDateTime(day.endTime);
     }
   }, []);
 
   if (!day || !week) {
-    return null;
+    return <Text>Not found</Text>;
   }
 
   const submit = async () => {
