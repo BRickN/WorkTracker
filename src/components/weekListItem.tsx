@@ -13,7 +13,7 @@ function WeekListItem({week}: {week: Week}) {
   return (
     <Card key={week.slug} style={{backgroundColor: 'blue'}}>
       <View style={styles.listHeaderContainer}>
-        <Text>Week: {week.weekSlug}</Text>
+        <Text>Week: {week.weekNr}</Text>
         <Text>
           From: {GetFormattedDateString(week.startDate)} - Till:{' '}
           {GetFormattedDateString(week.endDate)}

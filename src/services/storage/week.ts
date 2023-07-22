@@ -38,13 +38,15 @@ export const storeWeek = async (newWeek: Week): Promise<boolean> => {
 
 export const updateWeek = async (updatedWeek: Week) => {
   try {
-    console.log();
+    console.log('week', updatedWeek);
     let currentWeeks = await getWeeks();
-    let currentWeek = currentWeeks.find(x => x.slug === updatedWeek.slug);
-    if (!currentWeek) {
+    let currentWeekIdx = currentWeeks.findIndex(
+      x => x.slug === updatedWeek.slug,
+    );
+    if (currentWeekIdx < 0) {
       throw new Error('no week found for slug: ' + updatedWeek.slug);
     }
-    currentWeek = updatedWeek;
+    currentWeeks[currentWeekIdx] = updatedWeek;
     await storeData(WEEKS_DATA_KEY, currentWeeks);
   } catch (e) {
     console.log(e);

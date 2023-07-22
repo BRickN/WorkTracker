@@ -1,19 +1,16 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 import {HomeStackParamList} from '../infrastructure/navigation/navTypes';
 import SafeContainer from '../components/safeContainer';
 import {useContext, useEffect, useState} from 'react';
-import {GetFormattedTimeFromDate} from '../services/functions/timeFunctions';
 import {colors} from '../utils/colors';
-import {Button} from 'react-native-paper';
 import Spacer from '../components/spacer';
 import TimePicker from '../components/timePicker';
 import HeaderText from '../components/headerText';
 import SubmitButton from '../components/submitButton';
-import navigation from '../infrastructure/navigation';
 import {getWeeks, updateWeek} from '../services/storage/week';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
-import {Day, Week} from '../infrastructure/types/timeData';
+import {Day} from '../infrastructure/types/timeData';
 
 type DayDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -21,9 +18,7 @@ type DayDetailNavigationProps = NativeStackScreenProps<
 >;
 
 function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
-  const {weeks, isLoadingWeeks, error, update} = useContext(
-    WeeksContext,
-  ) as WeeksContextType;
+  const {weeks, update} = useContext(WeeksContext) as WeeksContextType;
   const [startDateTime, setStartDateTime] = useState<Date>();
   const [endDateTime, setEndDateTime] = useState<Date>();
   const [endDateTimePickerVisible, setEndDateTimePickerVisible] =
@@ -38,6 +33,7 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
     }
     if (day?.endTime != null) {
       setEndDateTime(day.endTime);
+      setEndDateTimePickerVisible(true);
     }
   }, []);
 
@@ -46,16 +42,10 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
   }
 
   const submit = async () => {
-    console.log('start ' + startDateTime);
-    console.log('end ' + endDateTime);
-    console.log('day before update' + JSON.stringify(day));
     day.startTime = startDateTime;
     day.endTime = endDateTime;
-    console.log(week);
     await updateWeek(week);
     update(await getWeeks());
-    console.log('day after update' + JSON.stringify(day));
-
     navigation.pop(1);
   };
 

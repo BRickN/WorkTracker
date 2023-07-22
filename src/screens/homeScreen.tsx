@@ -37,7 +37,6 @@ function HomeScreen({navigation}: HomeNavigationProps) {
   const hideModal = () => setModalVisible(false);
 
   const storeData = async (data: NewWeekFormData) => {
-    console.log(data);
     const week = new Week(data);
 
     const success = await storeWeek(week);
