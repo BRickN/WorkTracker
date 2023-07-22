@@ -15,16 +15,13 @@ import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {colors} from '../utils/colors';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Modal} from 'react-native';
 import NewWeekForm, {NewWeekFormData} from '../components/newWeekForm';
 import {getWeeks, storeWeek} from '../services/storage/week';
 import {useIsFocused} from '@react-navigation/native';
-
-// type HomeNavigationProps = CompositeScreenProps<
-//   BottomTabScreenProps<BottomTabParamList, 'Home'>,
-//   StackScreenProps<RootStackParamList, 'Root'>
-// >;
+import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
+import Loader from '../components/loader';
 
 type HomeNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -32,11 +29,11 @@ type HomeNavigationProps = NativeStackScreenProps<
 >;
 
 function HomeScreen({navigation}: HomeNavigationProps) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [weeks, setWeeks] = useState<Week[]>([]);
-  const isFocused = useIsFocused();
+  const {weeks, isLoadingWeeks, error, update} = useContext(
+    WeeksContext,
+  ) as WeeksContextType;
 
-  // const weeks = useWeeks();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
@@ -49,17 +46,9 @@ function HomeScreen({navigation}: HomeNavigationProps) {
     const success = await storeWeek(week);
     if (success) {
       setModalVisible(false);
-      setWeeks([week, ...weeks]);
+      update([week, ...weeks]);
     }
   };
-
-  useEffect(() => {
-    if (isFocused) {
-      getWeeks().then(result => {
-        setWeeks(result);
-      });
-    }
-  }, [isFocused]);
 
   const renderWeek = ({item}: {item: Week}) => {
     return (
@@ -77,32 +66,35 @@ function HomeScreen({navigation}: HomeNavigationProps) {
   return (
     <>
       <SafeContainer>
-        <View style={styles.weeksContainer}>
-          <FlatList data={weeks} renderItem={renderWeek} />
-          <TouchableOpacity onPress={showModal}>
-            <Icon
-              name={'plus-circle'}
-              size={60}
-              style={styles.plusIcon}
-              color={colors.textPrimary}
-            />
-          </TouchableOpacity>
-          <Modal visible={modalVisible} transparent={true}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <View style={styles.closeContainer}>
-                  <Pressable onPress={hideModal} style={styles.pressable}>
-                    <Text style={styles.buttonClose}>X</Text>
-                  </Pressable>
-                </View>
-                <View style={styles.formContainer}>
-                  <NewWeekForm onSubmit={data => storeData(data)} />
+        {isLoadingWeeks ? (
+          <Loader />
+        ) : (
+          <View style={styles.weeksContainer}>
+            <FlatList data={weeks} renderItem={renderWeek} />
+            <TouchableOpacity onPress={showModal}>
+              <Icon
+                name={'plus-circle'}
+                size={60}
+                style={styles.plusIcon}
+                color={colors.textPrimary}
+              />
+            </TouchableOpacity>
+            <Modal visible={modalVisible} transparent={true}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <View style={styles.closeContainer}>
+                    <Pressable onPress={hideModal} style={styles.pressable}>
+                      <Text style={styles.buttonClose}>X</Text>
+                    </Pressable>
+                  </View>
+                  <View style={styles.formContainer}>
+                    <NewWeekForm onSubmit={data => storeData(data)} />
+                  </View>
                 </View>
               </View>
-            </View>
-          </Modal>
-        </View>
-        <View />
+            </Modal>
+          </View>
+        )}
       </SafeContainer>
     </>
   );

@@ -4,16 +4,13 @@ import {Week} from '../../infrastructure/types/timeData';
 
 const WEEKS_DATA_KEY: string = 'weeks-data';
 
-export const initWeeks = async (): Promise<boolean> => {
-  await storeData(WEEKS_DATA_KEY, tempData);
-
+export const initWeeks = async (): Promise<Week[]> => {
   const hasWeeks = await containsKey(WEEKS_DATA_KEY);
 
   if (!hasWeeks) {
     await storeData(WEEKS_DATA_KEY, tempData);
-    return true;
   }
-  return false;
+  return await getWeeks();
 };
 
 export const getWeeks = async (): Promise<Week[]> => {
