@@ -2,61 +2,105 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 import {HomeStackParamList} from '../infrastructure/navigation/navTypes';
 import SafeContainer from '../components/safeContainer';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {GetFormattedTimeFromDate} from '../services/functions/timeFunctions';
 import {colors} from '../utils/colors';
 import {Button} from 'react-native-paper';
 import Spacer from '../components/spacer';
 import TimePicker from '../components/timePicker';
 import HeaderText from '../components/headerText';
+import SubmitButton from '../components/submitButton';
+import navigation from '../infrastructure/navigation';
+import {getWeeks, updateWeek} from '../services/storage/week';
+import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
 
 type DayDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
   'DayDetail'
 >;
 
-function DayDetailScreen({route}: DayDetailNavigationProps) {
+function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
+  const {weeks, isLoadingWeeks, error, update} = useContext(
+    WeeksContext,
+  ) as WeeksContextType;
   const [startDateTime, setStartDateTime] = useState<Date>();
   const [endDateTime, setEndDateTime] = useState<Date>();
+  const [endDateTimePickerVisible, setEndDateTimePickerVisible] =
+    useState(false);
+
   const day = route.params.day;
+  const week = weeks.find(x => x.slug === route.params.weekSlug);
 
   useEffect(() => {
-    if (route.params.day.startTime != null) {
+    if (route.params.day?.startTime != null) {
       setStartDateTime(day.startTime);
     }
-    if (route.params.day.endTime != null) {
+    if (route.params.day?.endTime != null) {
       setEndDateTime(day.endTime);
     }
   }, []);
 
-  const submit = () => {
-    console.log(startDateTime);
-    console.log(endDateTime);
+  if (!day || !week) {
+    return null;
+  }
+
+  const submit = async () => {
+    console.log('start ' + startDateTime);
+    console.log('end' + endDateTime);
+    console.log('day before update' + JSON.stringify(day));
+    day.startTime = startDateTime;
+    day.endTime = endDateTime;
+    await updateWeek(week);
+    update(await getWeeks());
+    console.log('day after update' + JSON.stringify(day));
+
+    navigation.pop(1);
   };
 
   return (
     <>
       <SafeContainer>
         <View style={styles.inputContainer}>
-          <HeaderText text={'Start'} />
-          <TimePicker
-            date={day.startTime}
-            parentOnChange={selectedDate => {
-              setStartDateTime(selectedDate);
-            }}
-          />
+          <View style={styles.columnContainer}>
+            <HeaderText text={'Start'} />
+          </View>
+          <View style={styles.columnContainer}>
+            <TimePicker
+              date={day.startTime}
+              parentOnChange={selectedDate => {
+                setStartDateTime(selectedDate);
+              }}
+            />
+          </View>
         </View>
         <Spacer marginTop={2} marginBottom={2} marginLeft={0} marginRight={0} />
         <View style={styles.inputContainer}>
-          <HeaderText text={'End'} />
-          <TimePicker
-            date={day.endTime}
-            parentOnChange={selectedDate => {
-              setEndDateTime(selectedDate);
-            }}
+          <View style={styles.columnContainer}>
+            <HeaderText text={'End'} />
+          </View>
+          <View style={styles.columnContainer}>
+            {endDateTimePickerVisible ? (
+              <TimePicker
+                date={day.endTime}
+                parentOnChange={selectedDate => {
+                  setEndDateTime(selectedDate);
+                }}
+              />
+            ) : (
+              <SubmitButton
+                onPress={() => setEndDateTimePickerVisible(true)}
+                text={'Set'}
+              />
+            )}
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <SubmitButton
+            onPress={submit}
+            text={'Submit'}
+            style={styles.submitTimeButton}
           />
         </View>
-        <Button onPress={submit}>Submit</Button>
       </SafeContainer>
     </>
   );
@@ -67,7 +111,7 @@ export default DayDetailScreen;
 const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginTop: 10,
     marginBottom: 10,
   },
@@ -82,18 +126,19 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  header: {
-    color: colors.textPrimary,
-    fontWeight: 'bold',
-    fontSize: 17,
+  columnContainer: {
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     color: '#fff',
   },
-  button: {
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  submitTimeButton: {
     width: '40%',
-    padding: 2,
-    backgroundColor: colors.primary,
-    borderRadius: 10,
   },
 });

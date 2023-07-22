@@ -145,6 +145,27 @@ function GetDayNameByDayNumber(dayNumber: number): string {
   return weekdays[dayNumber];
 }
 
+// function LocalizeDateString(date_to_convert_str: string) {
+//   const date_to_convert = new Date(date_to_convert_str);
+//   const local_date = new Date();
+//   date_to_convert.setHours(
+//     date_to_convert.getHours() + local_date.getTimezoneOffset() / 60,
+//   );
+//   return date_to_convert;
+// }
+function LocalizeDateString(date: Date) {
+  const newDate = new Date(
+    date.getTime() + date.getTimezoneOffset() * 60 * 1000,
+  );
+
+  const offset = date.getTimezoneOffset() / 60;
+  const hours = date.getHours();
+
+  newDate.setHours(hours - offset);
+
+  return newDate;
+}
+
 export {
   GetFormattedTimeFromDate,
   CalcHourDifference,
@@ -154,4 +175,5 @@ export {
   GetDayNameByDayNumber,
   GetFormattedDateString,
   CalcTotalHours,
+  LocalizeDateString,
 };

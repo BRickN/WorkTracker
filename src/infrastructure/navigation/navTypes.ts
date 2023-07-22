@@ -1,4 +1,4 @@
-import {Day, Week} from '../types/timeData';
+import {Day} from '../types/timeData';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -9,9 +9,10 @@ export type BottomTabParamList = {
 export type HomeStackParamList = {
   HomeStack: undefined;
   WeekDetail: {
-    week: Week;
+    weekSlug: string;
   };
   DayDetail: {
     day: Day;
+    weekSlug: string;
   };
 };

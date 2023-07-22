@@ -52,7 +52,7 @@ function HomeScreen({navigation}: HomeNavigationProps) {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate('WeekDetail', {
-            week: item,
+            weekSlug: item.slug,
           })
         }>
         <WeekListItem key={item.slug} week={item} />

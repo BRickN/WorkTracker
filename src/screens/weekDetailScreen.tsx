@@ -12,6 +12,8 @@ import {
   GetFormattedDateString,
   GetFormattedTimeFromDate,
 } from '../services/functions/timeFunctions';
+import {useContext} from 'react';
+import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
 
 type WeekDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -19,8 +21,16 @@ type WeekDetailNavigationProps = NativeStackScreenProps<
 >;
 
 function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
-  const week: Week = route.params.week;
-  console.log(week);
+  const {weeks} = useContext(WeeksContext) as WeeksContextType;
+
+  const week: Week | undefined = weeks.find(
+    x => x.slug === route.params.weekSlug,
+  );
+
+  if (!week) {
+    return null;
+  }
+
   return (
     <>
       <SafeContainer>
@@ -31,6 +41,7 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
               onPress={() =>
                 navigation.navigate('DayDetail', {
                   day: day,
+                  weekSlug: week.slug,
                 })
               }
               key={day.date.toString()}>
