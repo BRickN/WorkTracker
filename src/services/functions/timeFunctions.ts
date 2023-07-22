@@ -111,23 +111,22 @@ function GetWorkDaysBetweenStartEndDate(startDate: Date, endDate: Date): Day[] {
   let dayArray = new Array<Day>();
   let currentDate = startDate;
 
-  // endDate.setDate(endDate.getDate() - 2);
-  let endDateNew = new Date(
+  const endDateNew = new Date(
     endDate.getFullYear(),
     endDate.getMonth(),
-    endDate.getDate() - 2,
+    endDate.getDate() - 1,
   );
 
   while (currentDate <= endDateNew) {
-    dayArray.push(new Day(currentDate));
-    currentDate = addDays(currentDate, 1);
+    let dayToAdd = new Day(currentDate);
+    dayArray.push(JSON.parse(JSON.stringify(dayToAdd)));
+    addDays(currentDate, 1);
   }
   return dayArray;
 }
 
-const addDays = (date: Date, days: number): Date => {
+const addDays = (date: Date, days: number): void => {
   date.setDate(date.getDate() + days);
-  return date;
 };
 
 function GetDayNameByDayNumber(dayNumber: number): string {
