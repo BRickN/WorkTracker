@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     fontSize: 15,
+    fontWeight: '500',
   },
   columnContainer: {
     width: '50%',
