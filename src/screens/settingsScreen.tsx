@@ -10,6 +10,7 @@ import Spacer from '../components/spacer';
 
 export type SettingsFormData = {
   yearlyHours: string;
+  hoursPerWeek: string;
   breakTime: string;
 };
 
@@ -84,6 +85,32 @@ function SettingsScreen() {
           </View>
         </View>
         <Spacer marginTop={5} marginBottom={5} marginLeft={0} marginRight={0} />
+
+        <View style={styles.formRow}>
+          <View style={styles.columnContainer}>
+            <Text style={styles.formLabel}>Hours per week:</Text>
+          </View>
+          <View style={styles.columnContainer}>
+            <Controller
+              rules={{required: true}}
+              name={'hoursPerWeek'}
+              control={control}
+              render={({field: {onChange, value}}) => (
+                <TextInput
+                  onChangeText={text => {
+                    onChange(text);
+                  }}
+                  value={value}
+                  style={styles.input}
+                  placeholder={'Hours per week'}
+                  keyboardType={'numeric'}
+                />
+              )}
+            />
+          </View>
+        </View>
+        <Spacer marginTop={5} marginBottom={5} marginLeft={0} marginRight={0} />
+
         <View style={styles.formRow}>
           <SubmitButton
             text={'Submit'}

@@ -6,10 +6,7 @@ import {getSettings} from '../services/storage/settings';
 import {CalcHourDifference} from '../services/functions/timeFunctions';
 import SubmitButton from '../components/submitButton';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
-import {
-  HomeStackParamList,
-  OverviewStackParamList,
-} from '../infrastructure/navigation/navTypes';
+import {OverviewStackParamList} from '../infrastructure/navigation/navTypes';
 
 type OverviewNavigationProps = NativeStackScreenProps<
   OverviewStackParamList,
@@ -56,6 +53,8 @@ function OverviewScreen({navigation}: OverviewNavigationProps) {
   };
 
   const calcHoursResult = async (): Promise<number> => {
+    console.log(hoursWorked);
+    console.log(hoursToWork);
     return hoursWorked - hoursToWork;
   };
 
@@ -66,29 +65,37 @@ function OverviewScreen({navigation}: OverviewNavigationProps) {
   return (
     <>
       <SafeContainer>
-        <View style={styles.formRow}>
-          <View style={styles.columnContainer}>
-            <Text style={styles.formLabel}>Hours worked:</Text>
+        <View style={styles.overviewContainer}>
+          <View style={styles.formRow}>
+            <View style={styles.columnContainer}>
+              <Text style={styles.formLabel}>Hours worked:</Text>
+            </View>
+            <View style={styles.columnContainer}>
+              <Text>{hoursWorked}</Text>
+            </View>
           </View>
-          <View style={styles.columnContainer}>
-            <Text>{hoursWorked}</Text>
+          <View style={styles.formRow}>
+            <View style={styles.columnContainer}>
+              <Text style={styles.formLabel}>Hours to work:</Text>
+            </View>
+            <View style={styles.columnContainer}>
+              <Text>{hoursToWork}</Text>
+            </View>
+          </View>
+          <View style={styles.formRow}>
+            <View style={styles.columnContainer} />
+            <View style={styles.columnContainer}>
+              <Text>{hoursResult}</Text>
+            </View>
           </View>
         </View>
-        <View style={styles.formRow}>
-          <View style={styles.columnContainer}>
-            <Text style={styles.formLabel}>Hours to work:</Text>
-          </View>
-          <View style={styles.columnContainer}>
-            <Text>{hoursToWork}</Text>
-          </View>
+        <View style={styles.detailsContainer}>
+          <SubmitButton
+            text={'Details'}
+            onPress={handleDetailsPress}
+            style={styles.detailButton}
+          />
         </View>
-        <View style={styles.formRow}>
-          <View style={styles.columnContainer} />
-          <View style={styles.columnContainer}>
-            <Text>{hoursResult}</Text>
-          </View>
-        </View>
-        <SubmitButton text={'Details'} onPress={handleDetailsPress} />
       </SafeContainer>
     </>
   );
@@ -97,6 +104,12 @@ function OverviewScreen({navigation}: OverviewNavigationProps) {
 export default OverviewScreen;
 
 const styles = StyleSheet.create({
+  overviewContainer: {
+    flex: 9,
+  },
+  detailsContainer: {
+    flex: 1,
+  },
   input: {
     height: 40,
     borderWidth: 1,
@@ -119,5 +132,8 @@ const styles = StyleSheet.create({
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  detailButton: {
+    justifyContent: 'flex-end',
   },
 });
