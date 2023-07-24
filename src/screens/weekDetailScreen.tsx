@@ -33,7 +33,7 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
 
   return (
     <>
-      <SafeContainer>
+      <SafeContainer style={{paddingTop: 10}}>
         {week.days.map(day => {
           return (
             <TouchableOpacity

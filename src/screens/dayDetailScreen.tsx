@@ -51,7 +51,7 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
 
   return (
     <>
-      <SafeContainer>
+      <SafeContainer style={{paddingTop: 10}}>
         <View style={styles.inputContainer}>
           <View style={styles.columnContainer}>
             <HeaderText text={'Start'} />

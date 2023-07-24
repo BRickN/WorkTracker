@@ -63,7 +63,7 @@ function HomeScreen({navigation}: HomeNavigationProps) {
 
   return (
     <>
-      <SafeContainer>
+      <SafeContainer style={{paddingTop: 10}}>
         {isLoadingWeeks ? (
           <Loader />
         ) : (

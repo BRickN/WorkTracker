@@ -35,7 +35,7 @@ function AppNavigator() {
             ),
             tabBarActiveTintColor: colors.primary,
             headerStyle: {backgroundColor: colors.tertiary},
-            headerShown: false,
+            headerShown: true,
           }}
         />
         <Tab.Screen
@@ -47,7 +47,7 @@ function AppNavigator() {
             ),
             tabBarActiveTintColor: colors.primary,
             headerStyle: {backgroundColor: colors.tertiary},
-            headerShown: false,
+            headerShown: true,
           }}
         />
       </Tab.Navigator>
