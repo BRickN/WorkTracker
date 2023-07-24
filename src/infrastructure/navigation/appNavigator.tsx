@@ -7,6 +7,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomTabParamList} from './navTypes';
 import HomeNavigator from './homeNavigator';
 import WeeksContextProvider from '../../services/context/weekscontext';
+import OverviewNavigator from './overviewNavigator';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -28,14 +29,14 @@ function AppNavigator() {
         />
         <Tab.Screen
           name={'Overview'}
-          component={OverviewScreen}
+          component={OverviewNavigator}
           options={{
             tabBarIcon: ({size, color}) => (
               <Icon name={'calendar'} size={size} color={color} />
             ),
             tabBarActiveTintColor: colors.primary,
             headerStyle: {backgroundColor: colors.tertiary},
-            headerShown: true,
+            headerShown: false,
           }}
         />
         <Tab.Screen

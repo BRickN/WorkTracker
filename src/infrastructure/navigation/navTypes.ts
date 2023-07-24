@@ -16,3 +16,8 @@ export type HomeStackParamList = {
     weekSlug: string;
   };
 };
+
+export type OverviewStackParamList = {
+  OverviewStackRoot: undefined;
+  OverviewDetail: undefined;
+};

@@ -5,8 +5,18 @@ import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
 import {getSettings} from '../services/storage/settings';
 import {CalcHourDifference} from '../services/functions/timeFunctions';
 import SubmitButton from '../components/submitButton';
+import {NativeStackScreenProps} from 'react-native-screens/native-stack';
+import {
+  HomeStackParamList,
+  OverviewStackParamList,
+} from '../infrastructure/navigation/navTypes';
 
-function OverviewScreen() {
+type OverviewNavigationProps = NativeStackScreenProps<
+  OverviewStackParamList,
+  'OverviewStackRoot'
+>;
+
+function OverviewScreen({navigation}: OverviewNavigationProps) {
   const {weeks, isLoadingWeeks, update} = useContext(
     WeeksContext,
   ) as WeeksContextType;
@@ -49,7 +59,9 @@ function OverviewScreen() {
     return hoursWorked - hoursToWork;
   };
 
-  const handleDetailsPress = () => {};
+  const handleDetailsPress = () => {
+    navigation.navigate('OverviewDetail');
+  };
 
   return (
     <>
