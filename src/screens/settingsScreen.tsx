@@ -1,10 +1,11 @@
 import {Text, View} from 'react-native';
+import SafeContainer from '../components/safeContainer';
 
 function SettingsScreen() {
   return (
-    <View>
+    <SafeContainer>
       <Text>Hi from settings</Text>
-    </View>
+    </SafeContainer>
   );
 }
 

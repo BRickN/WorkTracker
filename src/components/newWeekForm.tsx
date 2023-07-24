@@ -72,11 +72,7 @@ function NewWeekForm({onSubmit}: NewWeekFormProps) {
             marginLeft={6}
             marginRight={6}
           />
-          <SubmitButton
-            text={'Current'}
-            onPress={setCurrentWeek}
-            style={styles.weekFormSubmit}
-          />
+          <SubmitButton text={'Current'} onPress={setCurrentWeek} />
         </View>
         <Spacer marginTop={6} marginBottom={6} marginLeft={0} marginRight={0} />
         <View style={styles.formRow}>
@@ -119,7 +115,6 @@ function NewWeekForm({onSubmit}: NewWeekFormProps) {
         <SubmitButton
           text={'Submit'}
           onPress={handleSubmit(data => onSubmit(data as NewWeekFormData))}
-          style={styles.weekFormSubmit}
         />
       </View>
     </View>
@@ -140,9 +135,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: 'gray',
     width: 110,
-  },
-  weekFormSubmit: {
-    margin: 12,
   },
   formRow: {
     flexDirection: 'row',

@@ -11,8 +11,8 @@ export default SafeContainer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 10,
-    backgroundColor: colors.secondary,
     padding: 10,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 25,
+    backgroundColor: colors.secondary,
   },
 });

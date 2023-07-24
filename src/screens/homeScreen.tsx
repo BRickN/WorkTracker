@@ -48,14 +48,16 @@ function HomeScreen({navigation}: HomeNavigationProps) {
 
   const renderWeek = ({item}: {item: Week}) => {
     return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('WeekDetail', {
-            weekSlug: item.slug,
-          })
-        }>
-        <WeekListItem key={item.slug} week={item} />
-      </TouchableOpacity>
+      <>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('WeekDetail', {
+              weekSlug: item.slug,
+            })
+          }>
+          <WeekListItem key={item.slug} week={item} />
+        </TouchableOpacity>
+      </>
     );
   };
 
@@ -101,7 +103,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   weeksContainer: {
     flex: 1,
-    position: 'relative',
   },
   plusIcon: {
     position: 'absolute',

@@ -19,7 +19,7 @@ export interface SubmitButtonProps {
 // function SubmitButton(props: PressableProps & {text: string}) {
 function SubmitButton(props: TouchableOpacityProps & {text: string}) {
   return (
-    <TouchableOpacity {...props} style={[props.style, styles.button]}>
+    <TouchableOpacity {...props} style={[styles.button, props.style]}>
       <Text style={styles.text}>{props.text}</Text>
     </TouchableOpacity>
   );
