@@ -8,7 +8,9 @@ export const getSettings = async (): Promise<Settings> => {
   return settings;
 };
 
-export const updateSettings = async (settings: Settings): Promise<boolean> => {
+export const updateCacheSettings = async (
+  settings: Settings,
+): Promise<boolean> => {
   try {
     await storeData(SETTINGS_DATA_KEY, settings);
     console.log(await getSettings());

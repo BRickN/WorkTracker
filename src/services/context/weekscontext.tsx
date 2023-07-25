@@ -1,12 +1,12 @@
 import {createContext, ReactNode, useEffect, useState} from 'react';
 import {Week} from '../../infrastructure/types/timeData';
-import {initWeeks} from '../storage/week';
+import {initWeeks, storeWeek} from '../storage/week';
 
 export interface WeeksContextType {
   weeks: Week[];
   isLoadingWeeks: boolean;
   error?: Error;
-  update: (week: Week[]) => void;
+  update: (newWeek: Week, weeks: Week[]) => Promise<boolean>;
 }
 
 export const WeeksContext = createContext<WeeksContextType | null>(null);
@@ -30,8 +30,16 @@ const WeeksContextProvider = ({children}: {children: ReactNode}) => {
       });
   };
 
-  const updateWeeks = (weeks: Week[]) => {
-    setWeeks(weeks);
+  const updateWeeks = async (
+    newWeek: Week,
+    weeks: Week[],
+  ): Promise<boolean> => {
+    const success = await storeWeek(newWeek);
+    if (success) {
+      setWeeks(weeks);
+      return true;
+    }
+    return false;
   };
 
   useEffect(() => {

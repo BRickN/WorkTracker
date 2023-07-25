@@ -1,12 +1,16 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import SafeContainer from '../components/safeContainer';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import SubmitButton from '../components/submitButton';
 import {NewWeekFormData} from '../components/newWeekForm';
 import {Controller, useForm} from 'react-hook-form';
 import {getSettings, updateSettings} from '../services/storage/settings';
 import {Settings} from '../infrastructure/types/settings';
 import Spacer from '../components/spacer';
+import {
+  SettingsContext,
+  SettingsContextType,
+} from '../services/context/settingsContext';
 
 export type SettingsFormData = {
   yearlyHours: string;
@@ -15,14 +19,18 @@ export type SettingsFormData = {
 };
 
 function SettingsScreen() {
+  const {settings, isLoadingSettings, error, update} = useContext(
+    SettingsContext,
+  ) as SettingsContextType;
   const {control, handleSubmit, setValue} = useForm<SettingsFormData>();
+  console.log('settings');
 
   useEffect(() => {
     const initSettings = async () => {
-      const cacheSettings = await getSettings();
-      if (cacheSettings) {
-        setValue('breakTime', cacheSettings.breakTime);
-        setValue('yearlyHours', cacheSettings.yearlyHours);
+      if (settings) {
+        setValue('breakTime', settings.breakTime);
+        setValue('yearlyHours', settings.yearlyHours);
+        setValue('breakTime', settings.breakTime);
       }
     };
 
@@ -30,7 +38,7 @@ function SettingsScreen() {
   }, []);
 
   const onSubmit = async (data: SettingsFormData) => {
-    await updateSettings(new Settings(data));
+    await update(new Settings(data));
   };
 
   return (
