@@ -1,6 +1,7 @@
 import {containsKey, getData, storeData} from './index';
 import tempData from '../tempData.json';
 import {Week} from '../../infrastructure/types/timeData';
+import {parse} from '@babel/core';
 
 const WEEKS_DATA_KEY: string = 'weeks-data';
 
@@ -15,7 +16,9 @@ export const initWeeks = async (): Promise<Week[]> => {
 
 export const getWeeks = async (): Promise<Week[]> => {
   const weeks = (await getData(WEEKS_DATA_KEY)) as Week[];
-  return weeks.sort(x => x.weekNr);
+  return weeks.sort((a, b) => {
+    return b.weekNr - a.weekNr;
+  });
 };
 
 export const getWeekBySlug = async (slug: string): Promise<Week> => {
@@ -38,7 +41,6 @@ export const storeWeek = async (newWeek: Week): Promise<boolean> => {
 
 export const removeWeek = async (weekToDelete: Week): Promise<boolean> => {
   try {
-    console.log(weekToDelete);
     let currentWeeks = await getWeeks();
     let currentWeekIdx = currentWeeks.findIndex(
       x => x.slug === weekToDelete.slug,

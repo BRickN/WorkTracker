@@ -1,4 +1,4 @@
-import {View, StyleSheet, TextInput} from 'react-native';
+import {View, StyleSheet, TextInput, Text} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import SubmitButton from './submitButton';
 import {
@@ -15,9 +15,10 @@ export type NewWeekFormData = {
 
 type NewWeekFormProps = {
   onSubmit: (form: NewWeekFormData) => void;
+  errorMessage?: string;
 };
 
-function NewWeekForm({onSubmit}: NewWeekFormProps) {
+function NewWeekForm(props: NewWeekFormProps) {
   const {control, handleSubmit, setValue} = useForm<NewWeekFormData>();
 
   const determineStartEndDate = (text: string) => {
@@ -112,9 +113,16 @@ function NewWeekForm({onSubmit}: NewWeekFormProps) {
           />
         </View>
         <Spacer marginTop={6} marginBottom={6} marginLeft={0} marginRight={0} />
+        {props.errorMessage && (
+          <Text style={styles.errorText}>{props.errorMessage}</Text>
+        )}
+
+        <Spacer marginTop={6} marginBottom={6} marginLeft={0} marginRight={0} />
         <SubmitButton
           text={'Submit'}
-          onPress={handleSubmit(data => onSubmit(data as NewWeekFormData))}
+          onPress={handleSubmit(data =>
+            props.onSubmit(data as NewWeekFormData),
+          )}
         />
       </View>
     </View>
@@ -138,5 +146,8 @@ const styles = StyleSheet.create({
   },
   formRow: {
     flexDirection: 'row',
+  },
+  errorText: {
+    color: 'red',
   },
 });

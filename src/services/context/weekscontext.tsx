@@ -6,7 +6,7 @@ export interface WeeksContextType {
   weeks: Week[];
   isLoadingWeeks: boolean;
   error?: Error;
-  update: (newWeek: Week, weeks: Week[]) => Promise<boolean>;
+  updateWeeksContext: (weeks: Week[]) => void;
 }
 
 export const WeeksContext = createContext<WeeksContextType | null>(null);
@@ -30,16 +30,8 @@ const WeeksContextProvider = ({children}: {children: ReactNode}) => {
       });
   };
 
-  const updateWeeks = async (
-    newWeek: Week,
-    weeks: Week[],
-  ): Promise<boolean> => {
-    const success = await storeWeek(newWeek);
-    if (success) {
-      setWeeks(weeks);
-      return true;
-    }
-    return false;
+  const updateWeeks = async (weeks: Week[]) => {
+    setWeeks(weeks);
   };
 
   useEffect(() => {
@@ -52,7 +44,7 @@ const WeeksContextProvider = ({children}: {children: ReactNode}) => {
         weeks: weeks,
         isLoadingWeeks: isLoading,
         error: error,
-        update: updateWeeks,
+        updateWeeksContext: updateWeeks,
       }}>
       {children}
     </WeeksContext.Provider>

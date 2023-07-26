@@ -6,7 +6,7 @@ export interface SettingsContextType {
   settings?: Settings;
   isLoadingSettings: boolean;
   error?: Error;
-  update: (newSettings: Settings) => Promise<boolean>;
+  updateSettingsContext: (newSettings: Settings) => void;
 }
 
 export const SettingsContext = createContext<SettingsContextType | null>(null);
@@ -30,12 +30,8 @@ const SettingsContextProvider = ({children}: {children: ReactNode}) => {
       });
   };
 
-  const updateSettings = async (newSettings: Settings): Promise<boolean> => {
-    if (await updateCacheSettings(newSettings)) {
-      setSettings(settings);
-      return true;
-    }
-    return false;
+  const updateSettings = async (newSettings: Settings) => {
+    setSettings(newSettings);
   };
 
   useEffect(() => {
@@ -48,7 +44,7 @@ const SettingsContextProvider = ({children}: {children: ReactNode}) => {
         settings: settings,
         isLoadingSettings: isLoading,
         error: error,
-        update: updateSettings,
+        updateSettingsContext: updateSettings,
       }}>
       {children}
     </SettingsContext.Provider>

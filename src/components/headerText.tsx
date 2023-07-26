@@ -7,7 +7,7 @@ export interface HeaderTextProps {
 }
 
 export default function HeaderText(props: HeaderTextProps) {
-  return <Text style={[props.style, styles.header]}>{props.text}</Text>;
+  return <Text style={[styles.header, props.style]}>{props.text}</Text>;
 }
 
 const styles = StyleSheet.create({

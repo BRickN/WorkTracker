@@ -13,7 +13,6 @@ export const updateCacheSettings = async (
 ): Promise<boolean> => {
   try {
     await storeData(SETTINGS_DATA_KEY, settings);
-    console.log(await getSettings());
     return true;
   } catch (e) {
     console.log(e);

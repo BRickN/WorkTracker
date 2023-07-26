@@ -14,9 +14,7 @@ type OverviewNavigationProps = NativeStackScreenProps<
 >;
 
 function OverviewScreen({navigation}: OverviewNavigationProps) {
-  const {weeks, isLoadingWeeks, update} = useContext(
-    WeeksContext,
-  ) as WeeksContextType;
+  const {weeks} = useContext(WeeksContext) as WeeksContextType;
 
   const [hoursWorked, setHoursWorked] = useState(0);
   const [hoursToWork, setHoursToWork] = useState(0);
@@ -53,8 +51,6 @@ function OverviewScreen({navigation}: OverviewNavigationProps) {
   };
 
   const calcHoursResult = async (): Promise<number> => {
-    console.log(hoursWorked);
-    console.log(hoursToWork);
     return hoursWorked - hoursToWork;
   };
 

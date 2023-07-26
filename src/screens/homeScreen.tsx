@@ -17,7 +17,7 @@ import {colors} from '../utils/colors';
 import {useContext, useState} from 'react';
 import {Modal} from 'react-native';
 import NewWeekForm, {NewWeekFormData} from '../components/newWeekForm';
-import {storeWeek} from '../services/storage/week';
+import {getWeekBySlug, storeWeek} from '../services/storage/week';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
 import Loader from '../components/loader';
 
@@ -27,19 +27,31 @@ type HomeNavigationProps = NativeStackScreenProps<
 >;
 
 function HomeScreen({navigation}: HomeNavigationProps) {
-  const {weeks, isLoadingWeeks, update} = useContext(
+  const {weeks, isLoadingWeeks, updateWeeksContext} = useContext(
     WeeksContext,
   ) as WeeksContextType;
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
   const showModal = () => setModalVisible(true);
-  const hideModal = () => setModalVisible(false);
+  const hideModal = () => {
+    setErrorText('');
+    setModalVisible(false);
+  };
 
   const storeData = async (data: NewWeekFormData) => {
-    const newWeek = new Week(data);
-    if (await update(newWeek, weeks)) {
-      setModalVisible(false);
+    const week = new Week(data);
+
+    const existingWeek = await getWeekBySlug(week.slug);
+    if (existingWeek) {
+      setErrorText(`Week ${week.weekNr} already exists!`);
+    } else {
+      const success = await storeWeek(week);
+      if (success) {
+        hideModal();
+        updateWeeksContext([week, ...weeks]);
+      }
     }
   };
 
@@ -83,7 +95,10 @@ function HomeScreen({navigation}: HomeNavigationProps) {
                     </Pressable>
                   </View>
                   <View style={styles.formContainer}>
-                    <NewWeekForm onSubmit={data => storeData(data)} />
+                    <NewWeekForm
+                      onSubmit={data => storeData(data)}
+                      errorMessage={errorText}
+                    />
                   </View>
                 </View>
               </View>

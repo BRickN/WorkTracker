@@ -8,14 +8,13 @@ import {
   CalcTotalHours,
   GetFormattedDateString,
 } from '../services/functions/timeFunctions';
-import {removeWeek, storeWeek} from '../services/storage/week';
-import NewWeekForm, {NewWeekFormData} from './newWeekForm';
+import {getWeeks, removeWeek} from '../services/storage/week';
 import {useContext, useState} from 'react';
 import SubmitButton from './submitButton';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
 
 function WeekListItem({week}: {week: Week}) {
-  const {weeks, isLoadingWeeks, update} = useContext(
+  const {weeks, isLoadingWeeks, updateWeeksContext} = useContext(
     WeeksContext,
   ) as WeeksContextType;
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,7 +26,7 @@ function WeekListItem({week}: {week: Week}) {
     const success = await removeWeek(week);
     if (success) {
       setModalVisible(false);
-      update([week, ...weeks]);
+      await updateWeeksContext(await getWeeks());
     }
   };
 

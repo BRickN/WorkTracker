@@ -18,7 +18,9 @@ type DayDetailNavigationProps = NativeStackScreenProps<
 >;
 
 function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
-  const {weeks, update} = useContext(WeeksContext) as WeeksContextType;
+  const {weeks, updateWeeksContext} = useContext(
+    WeeksContext,
+  ) as WeeksContextType;
   const [startDateTime, setStartDateTime] = useState<Date>();
   const [endDateTime, setEndDateTime] = useState<Date>();
   const [endDateTimePickerVisible, setEndDateTimePickerVisible] =
@@ -45,7 +47,7 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
     day.startTime = startDateTime;
     day.endTime = endDateTime;
     await updateWeek(week);
-    update(await getWeeks());
+    updateWeeksContext(await getWeeks());
     navigation.pop(1);
   };
 
