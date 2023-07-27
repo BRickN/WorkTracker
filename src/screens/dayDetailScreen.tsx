@@ -11,6 +11,7 @@ import SubmitButton from '../components/submitButton';
 import {getWeeks, updateWeek} from '../services/storage/week';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
 import {Day} from '../infrastructure/types/timeData';
+import {Switch} from 'react-native-paper';
 
 type DayDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -25,6 +26,8 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
   const [endDateTime, setEndDateTime] = useState<Date>();
   const [endDateTimePickerVisible, setEndDateTimePickerVisible] =
     useState(false);
+  const [isWorkAtHome, setIsWorkAtHome] = useState(false);
+  const [isVacation, setIsVacation] = useState(false);
 
   const week = weeks.find(x => x.slug === route.params.weekSlug);
   const day = week?.days.find((x: Day) => x.date === route.params.dayDate);
@@ -37,6 +40,12 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
       setEndDateTime(day.endTime);
       setEndDateTimePickerVisible(true);
     }
+    if (day?.workAtHome) {
+      setIsWorkAtHome(true);
+    }
+    if (day?.vacation) {
+      setIsVacation(true);
+    }
   }, []);
 
   if (!day || !week) {
@@ -46,6 +55,9 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
   const submit = async () => {
     day.startTime = startDateTime;
     day.endTime = endDateTime;
+    day.workAtHome = isWorkAtHome;
+    day.vacation = isVacation;
+    console.log(day);
     await updateWeek(week);
     updateWeeksContext(await getWeeks());
     navigation.pop(1);
@@ -88,6 +100,33 @@ function DayDetailScreen({navigation, route}: DayDetailNavigationProps) {
             )}
           </View>
         </View>
+        <Spacer marginTop={2} marginBottom={2} marginLeft={0} marginRight={0} />
+        <View style={styles.inputContainer}>
+          <View style={styles.columnContainer}>
+            <HeaderText text={'Work @ home'} />
+          </View>
+          <View style={styles.columnContainer}>
+            <Switch
+              value={isWorkAtHome}
+              onValueChange={() => setIsWorkAtHome(!isWorkAtHome)}
+              color={colors.textPrimary}
+            />
+          </View>
+        </View>
+        <Spacer marginTop={2} marginBottom={2} marginLeft={0} marginRight={0} />
+        <View style={styles.inputContainer}>
+          <View style={styles.columnContainer}>
+            <HeaderText text={'Vacation'} />
+          </View>
+          <View style={styles.columnContainer}>
+            <Switch
+              value={isVacation}
+              onValueChange={() => setIsVacation(!isVacation)}
+              color={colors.textPrimary}
+            />
+          </View>
+        </View>
+        <Spacer marginTop={2} marginBottom={2} marginLeft={0} marginRight={0} />
         <View style={styles.buttonContainer}>
           <SubmitButton
             onPress={submit}

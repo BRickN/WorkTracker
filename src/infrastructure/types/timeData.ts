@@ -42,11 +42,15 @@ export class Day {
   day: string;
   startTime?: Date;
   endTime?: Date;
+  workAtHome: boolean;
+  vacation: boolean;
 
   constructor(date: Date) {
     this.date = date;
     this.day = GetDayNameByDayNumber(date.getDay());
     this.startTime = undefined;
     this.endTime = undefined;
+    this.workAtHome = false;
+    this.vacation = false;
   }
 }

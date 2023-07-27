@@ -104,7 +104,18 @@ function CalcTotalHours(week: Week): number {
       sum += hoursWorked;
     }
   });
-  return sum;
+  return parseFloat(sum.toFixed(2));
+}
+
+function CalcTotalHoursMinusBreak(week: Week, breakTime: number): number {
+  let sum = 0;
+  week.days.forEach(day => {
+    let hoursWorked = CalcHourDifference(day.startTime, day.endTime);
+    if (hoursWorked) {
+      sum += hoursWorked - breakTime;
+    }
+  });
+  return parseFloat(sum.toFixed(2));
 }
 
 function GetWorkDaysBetweenStartEndDate(startDate: Date, endDate: Date): Day[] {
@@ -145,14 +156,6 @@ function GetDayNameByDayNumber(dayNumber: number): string {
   return weekdays[dayNumber];
 }
 
-// function LocalizeDateString(date_to_convert_str: string) {
-//   const date_to_convert = new Date(date_to_convert_str);
-//   const local_date = new Date();
-//   date_to_convert.setHours(
-//     date_to_convert.getHours() + local_date.getTimezoneOffset() / 60,
-//   );
-//   return date_to_convert;
-// }
 function LocalizeDateString(date: Date) {
   const newDate = new Date(
     date.getTime() + date.getTimezoneOffset() * 60 * 1000,
@@ -175,5 +178,6 @@ export {
   GetDayNameByDayNumber,
   GetFormattedDateString,
   CalcTotalHours,
+  CalcTotalHoursMinusBreak,
   LocalizeDateString,
 };

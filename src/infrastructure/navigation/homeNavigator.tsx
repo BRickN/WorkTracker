@@ -28,7 +28,10 @@ function HomeNavigator() {
       <Stack.Screen
         name={'DayDetail'}
         component={DayDetailScreen}
-        options={{headerShown: true, title: 'Register hours'}}
+        options={{
+          headerShown: true,
+          title: 'Register hours',
+        }}
       />
     </Stack.Navigator>
   );

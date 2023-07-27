@@ -15,45 +15,43 @@ import {
 } from '../services/functions/timeFunctions';
 
 function OverviewDetailsScreen() {
-  const {weeks, isLoadingWeeks, updateWeeksContext} = useContext(
-    WeeksContext,
-  ) as WeeksContextType;
-  const {settings, isLoadingSettings, error, updateSettingsContext} =
-    useContext(SettingsContext) as SettingsContextType;
-
-  const renderOverviewDetails = ({item}: {item: Week}) => {
-    const headerText: string = `Week: ${item.weekNr.toString()}`;
-    const subHeaderTextFrom: string = `${GetFormattedDateString(
-      item.startDate,
-    )}`;
-    const subHeaderTextTill: string = `${GetFormattedDateString(item.endDate)}`;
-
-    const totalHoursWorked = CalcTotalHours(item);
-    const diff = totalHoursWorked - parseInt(settings?.hoursPerWeek ?? '');
-    return (
-      <Card>
-        <View style={styles.cardContainer}>
-          <View style={styles.cardColumn}>
-            <HeaderText text={headerText} style={styles.headerText} />
-            <HeaderText text={subHeaderTextFrom} style={styles.subHeaderText} />
-            <HeaderText text={subHeaderTextTill} style={styles.subHeaderText} />
-          </View>
-          <View style={styles.cardColumn}>
-            <Text>Worked: {CalcTotalHours(item)}</Text>
-            <Text style={diff >= 0 ? styles.textPositive : styles.textNegative}>
-              Difference: {diff}
-            </Text>
-          </View>
-        </View>
-      </Card>
-    );
-  };
-
-  return (
-    <SafeContainer>
-      <FlatList data={weeks} renderItem={renderOverviewDetails} />
-    </SafeContainer>
-  );
+  return null;
+  // const {weeks} = useContext(WeeksContext) as WeeksContextType;
+  // const {settings} = useContext(SettingsContext) as SettingsContextType;
+  //
+  // const renderOverviewDetails = ({item}: {item: Week}) => {
+  //   const headerText: string = `Week: ${item.weekNr.toString()}`;
+  //   const subHeaderTextFrom: string = `${GetFormattedDateString(
+  //     item.startDate,
+  //   )}`;
+  //   const subHeaderTextTill: string = `${GetFormattedDateString(item.endDate)}`;
+  //
+  //   const totalHoursWorked = CalcTotalHours(item);
+  //   const diff = totalHoursWorked - parseInt(settings?.hoursPerWeek ?? '');
+  //   return (
+  //     <Card>
+  //       <View style={styles.cardContainer}>
+  //         <View style={styles.cardColumn}>
+  //           <HeaderText text={headerText} style={styles.headerText} />
+  //           <HeaderText text={subHeaderTextFrom} style={styles.subHeaderText} />
+  //           <HeaderText text={subHeaderTextTill} style={styles.subHeaderText} />
+  //         </View>
+  //         <View style={[styles.cardColumn, styles.alignCenter]}>
+  //           <Text>Worked: {CalcTotalHours(item)}</Text>
+  //           <Text style={diff >= 0 ? styles.textPositive : styles.textNegative}>
+  //             Difference: {diff}
+  //           </Text>
+  //         </View>
+  //       </View>
+  //     </Card>
+  //   );
+  // };
+  //
+  // return (
+  //   <SafeContainer>
+  //     <FlatList data={weeks} renderItem={renderOverviewDetails} />
+  //   </SafeContainer>
+  // );
 }
 
 export default OverviewDetailsScreen;
@@ -66,9 +64,13 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flexDirection: 'row',
+    padding: 2,
   },
   cardColumn: {
     flex: 1,
+  },
+  alignCenter: {
+    justifyContent: 'center',
   },
   textPositive: {
     color: 'green',

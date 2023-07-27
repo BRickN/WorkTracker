@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import SafeContainer from '../components/safeContainer';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import SubmitButton from '../components/submitButton';
 import {Controller, useForm} from 'react-hook-form';
 import {Settings} from '../infrastructure/types/settings';
@@ -18,9 +18,11 @@ export type SettingsFormData = {
 };
 
 function SettingsScreen() {
-  const {settings, isLoadingSettings, error, updateSettingsContext} =
-    useContext(SettingsContext) as SettingsContextType;
+  const {settings, updateSettingsContext} = useContext(
+    SettingsContext,
+  ) as SettingsContextType;
   const {control, handleSubmit, setValue} = useForm<SettingsFormData>();
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   useEffect(() => {
     const initSettings = () => {
@@ -56,6 +58,7 @@ function SettingsScreen() {
               render={({field: {onChange, value}}) => (
                 <TextInput
                   onChangeText={text => {
+                    setSubmitDisabled(false);
                     onChange(text);
                   }}
                   value={value}
@@ -81,6 +84,7 @@ function SettingsScreen() {
               render={({field: {onChange, value}}) => (
                 <TextInput
                   onChangeText={text => {
+                    setSubmitDisabled(false);
                     onChange(text);
                   }}
                   value={value}
@@ -106,6 +110,7 @@ function SettingsScreen() {
               render={({field: {onChange, value}}) => (
                 <TextInput
                   onChangeText={text => {
+                    setSubmitDisabled(false);
                     onChange(text);
                   }}
                   value={value}
@@ -123,6 +128,7 @@ function SettingsScreen() {
           <SubmitButton
             text={'Submit'}
             onPress={handleSubmit(data => onSubmit(data as SettingsFormData))}
+            disabled={submitDisabled}
           />
         </View>
       </SafeContainer>

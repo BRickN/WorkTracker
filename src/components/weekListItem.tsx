@@ -5,20 +5,24 @@ import {colors} from '../utils/colors';
 import Card from './card';
 import {
   CalcHourDifference,
-  CalcTotalHours,
+  CalcTotalHoursMinusBreak,
   GetFormattedDateString,
 } from '../services/functions/timeFunctions';
 import {getWeeks, removeWeek} from '../services/storage/week';
 import {useContext, useState} from 'react';
 import SubmitButton from './submitButton';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
+import {
+  SettingsContext,
+  SettingsContextType,
+} from '../services/context/settingsContext';
+import WeekListTotal from './weekListTotal';
 
 function WeekListItem({week}: {week: Week}) {
-  const {weeks, isLoadingWeeks, updateWeeksContext} = useContext(
-    WeeksContext,
-  ) as WeeksContextType;
+  const {updateWeeksContext} = useContext(WeeksContext) as WeeksContextType;
+  const {settings} = useContext(SettingsContext) as SettingsContextType;
   const [modalVisible, setModalVisible] = useState(false);
-
+  console.log(settings);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
 
@@ -45,14 +49,14 @@ function WeekListItem({week}: {week: Week}) {
         </View>
         <View style={styles.listDaysContainer}>
           {week.days?.length > 0 &&
-            week.days.map(day => (
-              <WeekListDay
-                key={day.day}
-                day={day.day[0]}
-                hours={CalcHourDifference(day.startTime, day.endTime)}
-              />
-            ))}
-          <WeekListDay day={'Total'} hours={CalcTotalHours(week)} />
+            week.days.map(day => <WeekListDay key={day.day} day={day} />)}
+          <WeekListTotal
+            title={'Total'}
+            hours={CalcTotalHoursMinusBreak(
+              week,
+              parseFloat(settings.breakTime),
+            )}
+          />
         </View>
         <Modal visible={modalVisible} transparent={true}>
           <View style={styles.centeredView}>

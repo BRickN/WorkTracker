@@ -1,8 +1,9 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
 import SafeContainer from '../components/safeContainer';
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 import {HomeStackParamList} from '../infrastructure/navigation/navTypes';
-import {Week} from '../infrastructure/types/timeData';
+import {Day, Week} from '../infrastructure/types/timeData';
 import {colors} from '../utils/colors';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -14,6 +15,7 @@ import {
 } from '../services/functions/timeFunctions';
 import {useContext} from 'react';
 import {WeeksContext, WeeksContextType} from '../services/context/weekscontext';
+import WeekDetailItem from '../components/weekDetailItem';
 
 type WeekDetailNavigationProps = NativeStackScreenProps<
   HomeStackParamList,
@@ -31,60 +33,19 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
     return null;
   }
 
+  const goTo = (navigationDay: Day) => {
+    navigation.navigate('DayDetail', {
+      dayDate: navigationDay.date,
+      weekSlug: week.slug,
+    });
+  };
+
   return (
     <>
       <SafeContainer style={{paddingTop: 10}}>
         {week.days.map(day => {
           return (
-            <TouchableOpacity
-              style={styles.cardContainer}
-              onPress={() =>
-                navigation.navigate('DayDetail', {
-                  dayDate: day.date,
-                  weekSlug: week.slug,
-                })
-              }
-              key={day.date.toString()}>
-              <View style={styles.infoContainer}>
-                <View>
-                  <Text style={styles.header}>
-                    {day.day} - {GetFormattedDateString(day.date)}
-                  </Text>
-                </View>
-                <View style={styles.timesInfoContainer}>
-                  <View>
-                    <TitleText
-                      title={'Start'}
-                      text={GetFormattedTimeFromDate(day.startTime)}
-                    />
-                  </View>
-                  <View>
-                    <TitleText
-                      title={'End'}
-                      text={GetFormattedTimeFromDate(day.endTime)}
-                    />
-                  </View>
-                  <View>
-                    <TitleText
-                      title={'Hours worked'}
-                      text={
-                        CalcHourDifference(
-                          day.startTime,
-                          day.endTime,
-                        )?.toString() ?? ''
-                      }
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.chevronContainer}>
-                <Icon
-                  name={'chevron-right'}
-                  size={20}
-                  color={colors.textPrimary}
-                />
-              </View>
-            </TouchableOpacity>
+            <WeekDetailItem week={week} day={day} onPress={() => goTo(day)} />
           );
         })}
       </SafeContainer>
@@ -93,49 +54,3 @@ function WeekDetailScreen({navigation, route}: WeekDetailNavigationProps) {
 }
 
 export default WeekDetailScreen;
-
-const styles = StyleSheet.create({
-  cardContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderRadius: 15,
-    marginBottom: 15,
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 20,
-    paddingRight: 20,
-    backgroundColor: colors.tertiary,
-  },
-  infoContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginRight: 10,
-    paddingRight: 10,
-    paddingLeft: 10,
-  },
-  timesInfoContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 5,
-  },
-  chevronContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 10,
-    padding: 10,
-  },
-  horizontalSpacer: {
-    marginTop: 2,
-    marginBottom: 2,
-  },
-  header: {
-    fontWeight: 'bold',
-    color: colors.textPrimary,
-    fontSize: 17,
-  },
-  title: {
-    fontWeight: 'bold',
-  },
-});

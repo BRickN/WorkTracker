@@ -14,12 +14,16 @@ export interface SubmitButtonProps {
   onPress: PressableProps;
   text: string;
   style?: StyleProp<ViewStyle>;
+  disabled: boolean;
 }
 
 // function SubmitButton(props: PressableProps & {text: string}) {
 function SubmitButton(props: TouchableOpacityProps & {text: string}) {
   return (
-    <TouchableOpacity {...props} style={[styles.button, props.style]}>
+    <TouchableOpacity
+      {...props}
+      style={[styles.button, props.style]}
+      disabled={props.disabled}>
       <Text style={styles.text}>{props.text}</Text>
     </TouchableOpacity>
   );
